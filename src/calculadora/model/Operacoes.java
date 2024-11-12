@@ -1,4 +1,4 @@
-package calculadora;
+package calculadora.model;
 
 public class Operacoes {
     public double soma(double a, double b) {

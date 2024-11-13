@@ -1,5 +1,7 @@
 package calculadora.view;
 
+import calculadora.model.Fracao;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,6 +13,13 @@ public class ConsoleView {
     }
 
     public void exibirMenu() {
+        System.out.println("Escolha o tipo de operação:");
+        System.out.println("1. Operações com Decimais");
+        System.out.println("2. Operações com Frações");
+        System.out.print(">>: ");
+    }
+
+    public void exibirMenuOperacoesDecimais() {
         System.out.println("Escolha uma operação: +, -, *, /, ^, v, %");
         System.out.println("+ (Soma)");
         System.out.println("- (Subtração)");
@@ -22,8 +31,33 @@ public class ConsoleView {
         System.out.print(">>: ");
     }
 
+    public void exibirMenuOperacoesFracao() {
+        System.out.println("Escolha uma operação: +, -, *, /");
+        System.out.println("+ (Soma)");
+        System.out.println("- (Subtração)");
+        System.out.println("* (Multiplicação)");
+        System.out.println("/ (Divisão)");
+        System.out.print(">>: ");
+    }
+
+    public int obterTipoOperacao() {
+        return scanner.nextInt();
+    }
+
     public String obterOperacao() {
         return scanner.nextLine();
+    }
+
+    public int obterNumerador(String descricao) {
+        System.out.printf("Digite o numerador da %s fração:%n", descricao);
+        System.out.print(">>: ");
+        return scanner.nextInt();
+    }
+
+    public int obterDenominador(String descricao) {
+        System.out.printf("Digite o denominador da %s fração:%n", descricao);
+        System.out.print(">>: ");
+        return scanner.nextInt();
     }
 
     public boolean continuar() {
@@ -46,8 +80,12 @@ public class ConsoleView {
         }
     }
 
-    public void exibirResultado(double resultado) {
-        System.out.printf("O resultado da operação é: %.2f", resultado);
+    public void exibirResultadoDecimal(double resultado) {
+        System.out.printf("O resultado da operação é: %.2f%n", resultado);
+    }
+
+    public void exibirResultadoFracao(Fracao resultado) {
+        System.out.println("O resultado da operação com frações é: " + resultado);
     }
 
     public void exibirMensagem(String mensagem) {
@@ -61,7 +99,7 @@ public class ConsoleView {
         }
     }
 
-    public void limparBuffer(){
+    public void limparBuffer() {
         scanner.nextLine();
     }
 }

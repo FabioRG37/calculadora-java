@@ -1,6 +1,7 @@
 package calculadora.controller;
 
 import calculadora.model.Fracao;
+import calculadora.model.Matriz;
 import calculadora.model.Operacoes;
 import calculadora.view.ConsoleView;
 
@@ -30,6 +31,8 @@ public class CalculadoraController {
                 executarOperacoesDecimais();
             } else if (tipoOperacao == 2) {
                 executarOperacoesFracoes();
+            } else if (tipoOperacao == 3) {
+                executarOperacoerMatrizes();
             } else {
                 System.out.println("Tipo de operação inválida!");
             }
@@ -40,7 +43,7 @@ public class CalculadoraController {
         view.exibirHistorico(historico);
     }
 
-    private void executarOperacoesDecimais(){
+    private void executarOperacoesDecimais() {
         view.exibirMenuOperacoesDecimais();
         String operacao = view.obterOperacao();
 
@@ -101,15 +104,13 @@ public class CalculadoraController {
         }
     }
 
-    private void executarOperacoesFracoes(){
+    private void executarOperacoesFracoes() {
         view.exibirMenuOperacoesFracao();
         String operacao = view.obterOperacao();
 
         Fracao fracao1 = new Fracao(view.obterNumerador("primeira"), view.obterDenominador("primeira"));
         Fracao fracao2 = new Fracao(view.obterNumerador("segunda"), view.obterDenominador("segunda"));
         Fracao resultado = null;
-
-        boolean operacaoValida = true;
 
         switch (operacao) {
             case "+":
@@ -126,7 +127,6 @@ public class CalculadoraController {
                 break;
             default:
                 System.out.println("Operação inválida!");
-                operacaoValida = false;
         }
 
         if (resultado != null) {
@@ -134,6 +134,46 @@ public class CalculadoraController {
                     , operacao, fracao1, fracao2, resultado);
             historico.add(entradaHistorico);
             view.exibirResultadoFracao(resultado);
+        }
+    }
+
+    private void executarOperacoerMatrizes() {
+        view.exibirMenuOperacoesMatrizes();
+        String operacao = view.obterOperacao();
+
+        int linhas1 = view.obterDimensao("linhas", "primeira");
+        int colunas1 = view.obterDimensao("colunas", "primeira");
+        Matriz matriz1 = new Matriz(linhas1, colunas1);
+        view.obterElementosMatriz(matriz1, "primeira");
+
+        Matriz matriz2 = null;
+        if (!operacao.equals("*") || linhas1 == colunas1) {
+            int linhas2 = view.obterDimensao("linhas", "segunda");
+            int colunas2 = view.obterDimensao("colunas", "segunda");
+            matriz2 = new Matriz(linhas2, colunas2);
+            view.obterElementosMatriz(matriz2, "segunda");
+        }
+
+        Matriz resultado = null;
+        switch (operacao) {
+            case "+":
+                resultado = matriz1.somar(matriz2);
+                break;
+            case "-":
+                resultado = matriz1.subtrair(matriz2);
+                break;
+            case "*":
+                resultado = matriz1.multiplicar(matriz2);
+                break;
+            default:
+                System.out.println("Operação inválida!");
+        }
+
+        if (resultado != null) {
+            String entradaHistorico = String.format("Operação '%s' com Matrizes:%nM1%n%s%nM2%n%sResultado:%n %s"
+                    , operacao, matriz1, matriz2, resultado);
+            historico.add(entradaHistorico);
+            view.exibirResultadoMatriz(matriz1, matriz2, operacao, resultado);
         }
     }
 }

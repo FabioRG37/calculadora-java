@@ -1,6 +1,7 @@
 package calculadora.view;
 
 import calculadora.model.Fracao;
+import calculadora.model.Matriz;
 
 import java.util.List;
 import java.util.Scanner;
@@ -16,11 +17,12 @@ public class ConsoleView {
         System.out.println("Escolha o tipo de operação:");
         System.out.println("1. Operações com Decimais");
         System.out.println("2. Operações com Frações");
+        System.out.println("3. Operações com Matrizes");
         System.out.print(">>: ");
     }
 
     public void exibirMenuOperacoesDecimais() {
-        System.out.println("Escolha uma operação: +, -, *, /, ^, v, %");
+        System.out.println("Escolha uma operação com decimais: +, -, *, /, ^, v, %");
         System.out.println("+ (Soma)");
         System.out.println("- (Subtração)");
         System.out.println("* (Multiplicação)");
@@ -32,11 +34,19 @@ public class ConsoleView {
     }
 
     public void exibirMenuOperacoesFracao() {
-        System.out.println("Escolha uma operação: +, -, *, /");
+        System.out.println("Escolha uma operação com frações: +, -, *, /");
         System.out.println("+ (Soma)");
         System.out.println("- (Subtração)");
         System.out.println("* (Multiplicação)");
         System.out.println("/ (Divisão)");
+        System.out.print(">>: ");
+    }
+
+    public void exibirMenuOperacoesMatrizes() {
+        System.out.println("Escolha uma operação com matrizes: +, -, *");
+        System.out.println("+ (Soma)");
+        System.out.println("- (Subtração)");
+        System.out.println("* (Multiplicação)");
         System.out.print(">>: ");
     }
 
@@ -80,12 +90,32 @@ public class ConsoleView {
         }
     }
 
+    public int obterDimensao(String tipo, String descricao) {
+        System.out.printf("Digite o numero de %s da %s matriz:%n",tipo , descricao);
+        System.out.print(">>: ");
+        return scanner.nextInt();
+    }
+
+    public void obterElementosMatriz(Matriz matriz, String descricao) {
+        System.out.printf("Digite os elementos da %s matriz:%n", descricao);
+        for (int i = 0; i < matriz.getLinhas(); i++) {
+            for (int j = 0; j < matriz.getColunas(); j++) {
+                System.out.printf("Elemento [%d][%d]: ", i + 1, j + 1);
+                matriz.setElemento(i, j, scanner.nextInt());
+            }
+        }
+    }
+
     public void exibirResultadoDecimal(double resultado) {
         System.out.printf("O resultado da operação é: %.2f%n", resultado);
     }
 
     public void exibirResultadoFracao(Fracao resultado) {
         System.out.println("O resultado da operação com frações é: " + resultado);
+    }
+
+    public void exibirResultadoMatriz(Matriz m1, Matriz m2, String op, Matriz result) {
+        System.out.printf("O resultado da operação '%s' com as matrizes:%nMatriz 1:%n%s%nMatriz 2:%n%s%nResultado:%n%s",op, m1, m2, result);
     }
 
     public void exibirMensagem(String mensagem) {

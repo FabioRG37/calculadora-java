@@ -5,6 +5,7 @@ import calculadora.model.Matriz;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class ConsoleView {
     private Scanner scanner;
@@ -18,6 +19,7 @@ public class ConsoleView {
         System.out.println("1. Operações com Decimais");
         System.out.println("2. Operações com Frações");
         System.out.println("3. Operações com Matrizes");
+        System.out.println("4. Expressões");
         System.out.print(">>: ");
     }
 
@@ -106,6 +108,13 @@ public class ConsoleView {
         }
     }
 
+    public String obterExpressao() {
+        System.out.println("Digite a expressão a ser calculada (use parênteses e operadores)");
+        System.out.print(">>: ");
+        return scanner.nextLine();
+    }
+
+
     public void exibirResultadoDecimal(double resultado) {
         System.out.printf("O resultado da operação é: %.2f%n", resultado);
     }
@@ -116,6 +125,10 @@ public class ConsoleView {
 
     public void exibirResultadoMatriz(Matriz m1, Matriz m2, String op, Matriz result) {
         System.out.printf("O resultado da operação '%s' com as matrizes:%nMatriz 1:%n%s%nMatriz 2:%n%s%nResultado:%n%s",op, m1, m2, result);
+    }
+
+    public void exibirResultadoExpressao(String expressao, double resultado){
+        System.out.printf("O resultado da expressão %s é %s%n", expressao, resultado);
     }
 
     public void exibirMensagem(String mensagem) {

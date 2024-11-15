@@ -1,5 +1,6 @@
 package calculadora.controller;
 
+import calculadora.model.Expressao;
 import calculadora.model.Fracao;
 import calculadora.model.Matriz;
 import calculadora.model.Operacoes;
@@ -33,6 +34,8 @@ public class CalculadoraController {
                 executarOperacoesFracoes();
             } else if (tipoOperacao == 3) {
                 executarOperacoerMatrizes();
+            } else if (tipoOperacao == 4) {
+                executarOperacoesExpressao();
             } else {
                 System.out.println("Tipo de operação inválida!");
             }
@@ -175,5 +178,12 @@ public class CalculadoraController {
             historico.add(entradaHistorico);
             view.exibirResultadoMatriz(matriz1, matriz2, operacao, resultado);
         }
+    }
+
+    private void executarOperacoesExpressao(){
+        String expressao = view.obterExpressao();
+        List<String> posfixa = Expressao.paraPosFixa(expressao);
+        double resultadoExpressao = Expressao.avaliarPosFixa(posfixa);
+        view.exibirResultadoExpressao(expressao, resultadoExpressao);
     }
 }

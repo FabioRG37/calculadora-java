@@ -1,0 +1,2 @@
+Operação: *, Números: 4,00 e 3,00, Resultado: 12,00
+Operação: -, Frações: 3/2 e 2/5, Resultado: 11/10

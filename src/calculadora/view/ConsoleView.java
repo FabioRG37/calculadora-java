@@ -20,6 +20,9 @@ public class ConsoleView {
         System.out.println("2. Operações com Frações");
         System.out.println("3. Operações com Matrizes");
         System.out.println("4. Expressões");
+        System.out.println("5. Salvar Histórico");
+        System.out.println("6. Limpar Histórico");
+        System.out.println("7. Carregar Histórico");
         System.out.print(">>: ");
     }
 
@@ -114,6 +117,11 @@ public class ConsoleView {
         return scanner.nextLine();
     }
 
+    public String obterNomeArquivo(String acao) {
+        System.out.printf("Digite o nome do arquivo para %s (com extensão .txt).%n", acao);
+        System.out.print(">>: ");
+        return scanner.nextLine();
+    }
 
     public void exibirResultadoDecimal(double resultado) {
         System.out.printf("O resultado da operação é: %.2f%n", resultado);
@@ -136,7 +144,7 @@ public class ConsoleView {
     }
 
     public void exibirHistorico(List<String> historico) {
-        System.out.println("\nHistórico de operações:");
+        System.out.println("\nHistórico de operações carregadas:");
         for (String operacao : historico) {
             System.out.println(operacao);
         }

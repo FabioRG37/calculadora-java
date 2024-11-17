@@ -6,6 +6,7 @@ import calculadora.model.Matriz;
 import calculadora.model.Operacoes;
 import calculadora.view.ConsoleView;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,8 +37,14 @@ public class CalculadoraController {
                 executarOperacoerMatrizes();
             } else if (tipoOperacao == 4) {
                 executarOperacoesExpressao();
+            } else if (tipoOperacao == 5) {
+                salvarHistorico();
+            } else if (tipoOperacao == 6) {
+                limparHistoricoAtual();
+            } else if (tipoOperacao == 7) {
+                carregarHistorico();
             } else {
-                System.out.println("Tipo de operação inválida!");
+                System.out.println("Opção inválida!");
             }
 
             continuar = view.continuar();
@@ -185,5 +192,72 @@ public class CalculadoraController {
         List<String> posfixa = Expressao.paraPosFixa(expressao);
         double resultadoExpressao = Expressao.avaliarPosFixa(posfixa);
         view.exibirResultadoExpressao(expressao, resultadoExpressao);
+        String entradaHistorico = String.format("Expressão: %s, Resultado: %.2f%n", expressao, resultadoExpressao);
+        historico.add(entradaHistorico);
+    }
+
+    private void salvarHistorico(){
+        String nomeArquivo = view.obterNomeArquivo("salvar");
+        salvarHistoricoEmArquivo(nomeArquivo);
+    }
+
+    private void carregarHistorico(){
+        File diretorio = new File("src/resources");
+        if (!diretorio.exists() || !diretorio.isDirectory()) {
+            System.out.println("Nenhum diretório salvo foi encontrado.");
+            return;
+        }
+
+        File[] arquivos = diretorio.listFiles((dir, name) -> name.endsWith(".txt"));
+        if (arquivos == null || arquivos.length == 0) {
+            System.out.println("Nenhum arquivo de histórico está disponível ainda.");
+            return;
+        }
+
+        System.out.println("Arquivos disponíveis para carregamento:");
+        for (File arquivo : arquivos) {
+            System.out.println("- " + arquivo.getName());
+        }
+
+        String nomeArquivo = view.obterNomeArquivo("carregar");
+        carregarHistoricoDeArquivo(nomeArquivo);
+    }
+
+    private void salvarHistoricoEmArquivo(String nomeArquivo) {
+        String caminhoArquivo = "src/resources/" + nomeArquivo;
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminhoArquivo))){
+            for (String operacao : historico) {
+                writer.write(operacao);
+                writer.newLine();
+            }
+            System.out.println("Histórico salvo com sucesso no arquivo: " + caminhoArquivo);
+        } catch (IOException e) {
+            System.err.println("Erro ao salvar o histórico: " + e.getMessage());
+        }
+    }
+
+    private void limparHistoricoAtual(){
+        historico.clear();
+    }
+
+    private void carregarHistoricoDeArquivo (String nomeArquivo) {
+        String caminhoArquivo = "src/resources/" + nomeArquivo;
+        File arquivoSelecionado = new File(caminhoArquivo);
+        if (!arquivoSelecionado.exists()) {
+            System.out.println("Arquivo não encontrado.");
+            return;
+        }
+
+        try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))){
+            limparHistoricoAtual();
+            String linha;
+            System.out.println("Conteúdo do histórico carregado:");
+            while ((linha = br.readLine()) !=null){
+                historico.add(linha);
+                System.out.println(linha);
+            }
+        } catch (IOException e) {
+            System.err.println("Erro ao carregar o histórico: " + e.getMessage());
+        }
     }
 }

@@ -3,6 +3,7 @@ package calculadora.view;
 import calculadora.model.Fracao;
 import calculadora.model.Matriz;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Stack;
@@ -13,6 +14,8 @@ public class ConsoleView {
     public ConsoleView() {
         this.scanner = new Scanner(System.in);
     }
+
+    // Construção de menus
 
     public void exibirMenu() {
         System.out.println("Escolha o tipo de operação:");
@@ -55,6 +58,8 @@ public class ConsoleView {
         System.out.print(">>: ");
     }
 
+    // Captando Entradas
+
     public int obterTipoOperacao() {
         return scanner.nextInt();
     }
@@ -64,15 +69,37 @@ public class ConsoleView {
     }
 
     public int obterNumerador(String descricao) {
-        System.out.printf("Digite o numerador da %s fração:%n", descricao);
-        System.out.print(">>: ");
-        return scanner.nextInt();
+        while (true) {
+            try {
+                System.out.printf("Digite o numerador da %s fração:%n", descricao);
+                System.out.print(">>: ");
+                String input = scanner.next().replace(",", ".");
+                return (int) Double.parseDouble(input);
+            } catch (InputMismatchException e) {
+                System.out.println("Erro: Entrada inválida. Por favor digite um número inteiro.");
+                scanner.nextInt();
+            }
+        }
     }
 
     public int obterDenominador(String descricao) {
-        System.out.printf("Digite o denominador da %s fração:%n", descricao);
-        System.out.print(">>: ");
-        return scanner.nextInt();
+        while (true) {
+            try {
+                System.out.printf("Digite o denominador da %s fração:%n", descricao);
+                System.out.print(">>: ");
+                String input = scanner.next().replace(",", ".");
+                int den = (int) Double.parseDouble(input);
+                if (den == 0) {
+                    System.out.println("Erro: O denominador não pode ser zero. Tente novamente.");
+                } else {
+                    return den;
+                }
+                return scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Erro: Entrada inválida. Por favor, digite um número inteiro.");
+                scanner.nextInt();
+            }
+        }
     }
 
     public boolean continuar() {
@@ -96,7 +123,7 @@ public class ConsoleView {
     }
 
     public int obterDimensao(String tipo, String descricao) {
-        System.out.printf("Digite o numero de %s da %s matriz:%n",tipo , descricao);
+        System.out.printf("Digite o numero de %s da %s matriz:%n", tipo, descricao);
         System.out.print(">>: ");
         return scanner.nextInt();
     }
@@ -123,6 +150,8 @@ public class ConsoleView {
         return scanner.nextLine();
     }
 
+    // Exibindo Resultados
+
     public void exibirResultadoDecimal(double resultado) {
         System.out.printf("O resultado da operação é: %.2f%n", resultado);
     }
@@ -132,10 +161,10 @@ public class ConsoleView {
     }
 
     public void exibirResultadoMatriz(Matriz m1, Matriz m2, String op, Matriz result) {
-        System.out.printf("O resultado da operação '%s' com as matrizes:%nMatriz 1:%n%s%nMatriz 2:%n%s%nResultado:%n%s",op, m1, m2, result);
+        System.out.printf("O resultado da operação '%s' com as matrizes:%nMatriz 1:%n%s%nMatriz 2:%n%s%nResultado:%n%s", op, m1, m2, result);
     }
 
-    public void exibirResultadoExpressao(String expressao, double resultado){
+    public void exibirResultadoExpressao(String expressao, double resultado) {
         System.out.printf("O resultado da expressão %s é %s%n", expressao, resultado);
     }
 
@@ -149,6 +178,8 @@ public class ConsoleView {
             System.out.println(operacao);
         }
     }
+
+    // Limpeza do buffer
 
     public void limparBuffer() {
         scanner.nextLine();

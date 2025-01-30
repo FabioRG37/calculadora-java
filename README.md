@@ -1,101 +1,107 @@
-# Calculadora Java
+# Calculadora em Java
 
-Este é um projeto de uma **calculadora em Java**, desenvolvido no estilo de linha de comando (CLI), com foco na prática de conceitos de programação orientada a objetos (POO) e boas práticas de organização em projetos Java. Além de operações básicas, a calculadora foi expandida com funcionalidades avançadas.
+Este projeto é uma calculadora em Java que suporta diversas operações matemáticas, incluindo operações com números decimais, frações, matrizes e avaliação de expressões complexas. Além disso, a calculadora mantém um histórico de operações que pode ser salvo, carregado e limpo.
 
 ## Funcionalidades
 
-### 1. **Operações Matemáticas Básicas**
-- **Soma (`+`)**
-- **Subtração (`-`)**
-- **Multiplicação (`*`)**
-- **Divisão (`/`)**
-- **Potenciação (`^`)**
-- **Radiciação (`v`)**
-- **Módulo (`%`)**
+A calculadora oferece as seguintes funcionalidades:
 
-### 2. **Cálculos Avançados**
-#### Cálculos com Frações
-Permite realizar as operações básicas entre frações, mostrando os resultados simplificados.
+1. **Operações com Decimais**:
+    - Soma, subtração, multiplicação e divisão de números decimais.
 
-#### Operações com Matrizes
-- Soma e Subtração de matrizes.
-- Multiplicação de matrizes.  
-  Os tamanhos das matrizes são validados antes da operação.
+2. **Operações com Frações**:
+    - Soma, subtração, multiplicação e divisão de frações.
+    - Suporte para numeradores e denominadores inteiros.
 
-#### Avaliação de Expressões Matemáticas Complexas
-Interpreta expressões em formato infixo com parênteses e múltiplos operadores (exemplo: `3 + 5 * (2 - 4)`). Utiliza o algoritmo de **notação pós-fixa (RPN)** para garantir a precedência correta dos operadores.
+3. **Operações com Matrizes** (em desenvolvimento):
+    - Soma, subtração e multiplicação de matrizes.
+    - Multiplicação de matriz por escalar.
+    - Cálculo da transposta de uma matriz.
 
-### 3. **Histórico de Operações**
-- **Visualizar Histórico:** Mostra o histórico das operações realizadas durante a sessão.
-- **Salvar Histórico em Arquivo:** Permite salvar o histórico em um arquivo `.txt` dentro da pasta `resources/historico`. O nome do arquivo pode ser especificado pelo usuário.
-- **Carregar Histórico de Arquivo:** Lista os arquivos disponíveis na pasta `resources/historico` e permite selecionar um para carregar e exibir no terminal.
+4. **Expressões Complexas** (em desenvolvimento):
+    - Avaliação de expressões matemáticas com operadores básicos (`+`, `-`, `*`, `/`) e parênteses.
+    - Suporte para funções matemáticas (por exemplo, `sqrt`, `pow`).
 
----
+5. **Histórico de Operações**:
+    - Salvar o histórico de operações em um arquivo.
+    - Carregar o histórico de operações salvo.
+    - Limpar o histórico atual.
 
-## Estrutura do Projeto
+6. **Interface de Linha de Comando (CLI)**:
+    - Menu interativo para escolher o tipo de operação.
+    - Entrada e saída de dados via terminal.
 
-O projeto segue uma estrutura aproximada do padrão **MVC (Model-View-Controller)**:
-
-```
-src/
-├── calculadora/
-│   ├── controller/
-│   │   └── CalculadoraController.java
-│   ├── model/
-│   │   ├── Operacoes.java
-│   │   ├── Fracao.java
-│   │   ├── Matriz.java
-│   │   └── Expressao.java
-│   ├── view/
-│   │   └── ConsoleView.java
-│   ├── util/
-│   │   └── ArquivoUtil.java
-│   └── Calculadora.java
-resources/
-└── historico/
-```
-
-- **Controller:** Gerencia as interações entre a visão (View) e os modelos (Model).
-- **Model:** Contém a lógica de negócio, como cálculos e manipulação de dados.
-- **View:** Gerencia a interação com o usuário no terminal.
-- **Util:** Ferramentas auxiliares, como manipulação de arquivos.
-
----
-
-## Como Executar
+## Como Executar o Projeto
 
 ### Pré-requisitos
-- JDK 17 instalado
-- Git (opcional, para clonar o repositório)
 
-### Passo a Passo
-1. Clone este repositório:
+- **Java Development Kit (JDK)**: Certifique-se de ter o JDK instalado. Recomenda-se a versão 11 ou superior.
+- **Git**: Para clonar o repositório.
+
+### Passos para Execução
+
+1. Clone o repositório:
    ```bash
    git clone https://github.com/FabioRG37/calculadora-java.git
+   ```
+
+2. Navegue até o diretório do projeto:
+   ```bash
    cd calculadora-java
    ```
-2. Compile o projeto:
+
+3. Compile o código-fonte:
    ```bash
-   javac -d bin src/calculadora/*.java src/calculadora/*/*.java
+   javac -d bin src/calculadora/*.java src/calculadora/controller/*.java src/calculadora/model/*.java src/calculadora/view/*.java
    ```
-3. Execute a aplicação:
+
+4. Execute o projeto:
    ```bash
    java -cp bin calculadora.Calculadora
    ```
 
----
+5. Siga as instruções exibidas no terminal para realizar operações matemáticas.
 
-## Melhorias Futuras
+## Estrutura do Projeto
 
-- Criar uma interface gráfica (GUI) utilizando JavaFX ou Swing.
-- Implementar operações com números complexos.
-- Suporte para armazenar históricos em formato **JSON**.
-- Melhorar a validação de entrada para evitar erros durante o uso.
+O projeto está organizado da seguinte forma:
 
----
+- **`src/calculadora/`**: Pacote principal do projeto.
+    - **`Calculadora.java`**: Classe principal que inicia a calculadora.
+- **`src/calculadora/controller/`**: Contém as classes de controle.
+    - **`CalculadoraController.java`**: Gerencia o fluxo do programa e as operações.
+- **`src/calculadora/model/`**: Contém as classes de modelo.
+    - **`CalculadoraModel.java`**: Implementa a lógica das operações matemáticas.
+- **`src/calculadora/view/`**: Contém as classes de interface com o usuário.
+    - **`ConsoleView.java`**: Gerencia a interação com o usuário via terminal.
 
-## Contribuições
+## Tecnologias Utilizadas
 
-Contribuições são bem-vindas! Sinta-se à vontade para abrir **issues** ou enviar um **pull request**.
+- **Java**: Linguagem de programação principal.
+- **Git**: Controle de versão.
+- **GitHub**: Hospedagem do repositório.
+
+## Como Contribuir
+
+Contribuições são bem-vindas! Siga os passos abaixo para contribuir:
+
+1. Faça um fork do repositório.
+2. Crie uma branch para sua feature ou correção:
+   ```bash
+   git checkout -b minha-feature
+   ```
+3. Faça commit das suas alterações:
+   ```bash
+   git commit -m "Adicionando nova funcionalidade"
+   ```
+4. Envie as alterações para o repositório remoto:
+   ```bash
+   git push origin minha-feature
+   ```
+5. Abra um pull request no GitHub.
+
+## Licença
+
+Este projeto está licenciado sob a licença MIT. Consulte o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 ---

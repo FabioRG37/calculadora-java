@@ -14,8 +14,10 @@ public class Operacoes {
     }
 
     public double divide(double a, double b) {
+        double ret;
         if (b == 0) {
             System.out.println("Erro: Não é possível dividir por zero!");
+            ret = Double.NaN;
         }
         return a / b;
     }
